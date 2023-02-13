@@ -1,0 +1,19 @@
+name: Build stable Docker image (tags)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Create helm chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: App Version
+        uses: tdemin/find-latest-tag@v1
+        id: app_version
+        with:
+          repo: https://${{ secrets.HELM_CHARTS_BOT }}@github.com/krateoplatformops/patch-provider.git
+      - name: Print
+        run: echo ${{ steps.app_version.outputs.tag }}
